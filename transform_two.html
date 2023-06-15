@@ -85,7 +85,7 @@
     </div>
     <div class="col-xs-12 col-sm-12">
         <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">输出文本：</span>
+            <span class="input-group-addon" id="basic-addon2">输出文本：</span>
             <textarea name="ciphertext" id="ciphertext" onclick="this.focus();this.select();" class="form-control" rows="6" placeholder="密文"></textarea>
         </div>
     </div>
@@ -113,7 +113,7 @@
         }
         ciphertext += rowText;
     }
-
+    document.getElementById('basic-addon2').innerHTML = '输出文本（加密）'
     document.getElementById("ciphertext").value = ciphertext;
 }
 
@@ -133,7 +133,7 @@ function decrypt() {
         }
         plaintext += rowText;
     }
-
+    document.getElementById('basic-addon2').innerHTML = '输出文本（解密）'
     document.getElementById("ciphertext").value = plaintext;
 }
 
