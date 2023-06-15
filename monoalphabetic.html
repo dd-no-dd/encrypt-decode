@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>encrypt-decode:Caesar</title>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="./index.html">加密解密算法</a>
+	</div>
+	<div>
+		<ul class="nav navbar-nav">
+			<li><a href="./index.html">凯撒密码</a>
+            </li>
+            <li class="dropdown">
+				<a href="./letter_reverse.html" class="dropdown-toggle" data-toggle="dropdown" style="font-weight:bold">
+					单字母替换加密算法
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="./letter_reverse.html">字母倒排序</a></li>
+                    <li class="divider"></li>
+					<li class="active"><a href="./monoalphabetic.html" >单表置换密码</a>
+				</ul>
+            </li>
+			<li class="dropdown">
+				<a href="./multiletters.html" class="dropdown-toggle" data-toggle="dropdown">
+					多字母替换加密方法
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="./Vigenere.html">维吉利亚密码</a>
+				</ul>
+            </li>
+			</li>
+            <li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					转换加密方法
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="./transform_one.html">转换加密方法(1)</a></li>
+                    <li class="divider"></li>
+					<li><a href="./transform_two.html">转换加密方法(2)</a></li>
+                    <li class="divider"></li>
+					<li><a href="transform_three.html">转换加密方法(3)</a></li>
+				</ul>
+            </li>
+		</ul>
+        </div>
+	</div>
+	</div>
+</nav>
+<div id=""main-body" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<h1 class="page-header">单表置换加密/解密</h1>
+<!--Start!-->
+<div class="row margintb-6">
+    <div class="col-xs-12 col-sm-12">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">处理文本：</span>
+            <textarea name="plaintext" id="plaintext" class="form-control" rows="6" placeholder="这里输入明文"></textarea>
+        </div>
+    </div>
+</div>
+<div class="row margintb-6">
+    <div class="col-xs-12 col-sm-12">
+        <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon3">密钥(默认为倒字母)</span>
+            <input id="key"  class="form-control" value="ZYXWVUTSRQPONMLKJIHGFEDCBA" aria-describedby="basic-addon3">
+        </div>
+    </div>
+    <div class="row margintb-6">
+        <div class="col-xs-6 col-sm-2 col-sm-offset-4">
+            <button id="encode" type="button" class="btn btn-primary width-100-percent" onclick="monoalphabeticCipher(true);">加密</button>
+        </div>
+        <div class="col-xs-6 col-sm-2">
+            <button id="decode" type="button" class="btn btn-primary width-100-percent" onclick="monoalphabeticDecipher();">解密</button>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">输出文本：</span>
+            <textarea name="ciphertext" id="ciphertext" onclick="this.focus();this.select();" class="form-control" rows="6" placeholder="密文"></textarea>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+	/**
+	 * key是密钥;plaintext为待处理文本;ciphertext为输出文本
+	 */
+     function monoalphabeticCipher() {
+    var key = document.getElementById('key').value.toUpperCase();
+    var plaintext = document.getElementById('plaintext').value.toUpperCase();
+    var ciphertext = '';
+
+    // 创建新的加密字母表
+    var newAlphabet = '';
+    for (var i = 0; i < key.length; i++) {
+        if (newAlphabet.indexOf(key[i]) === -1) {
+            newAlphabet += key[i];
+        }
+    }
+    for (var i = 0; i < 26; i++) {
+        var letter = String.fromCharCode(65 + i);
+        if (newAlphabet.indexOf(letter) === -1) {
+            newAlphabet += letter;
+        }
+    }
+
+    // 加密
+    for (var i = 0; i < plaintext.length; i++) {
+        if (plaintext[i] >= 'A' && plaintext[i] <= 'Z') {
+            var index = plaintext[i].charCodeAt() - 65;
+            ciphertext += newAlphabet[index];
+        } else {
+            ciphertext += plaintext[i];
+        }
+    }
+    document.getElementById('basic-addon2').innerHTML = '输出文本（加密）'
+    document.getElementById('ciphertext').innerText = ciphertext;
+}
+
+function monoalphabeticDecipher() {
+    var key = document.getElementById('key').value.toUpperCase();
+    var ciphertext = document.getElementById('plaintext').value.toUpperCase();
+    var plaintext = '';
+
+    // 创建新的加密字母表
+    var newAlphabet = '';
+    for (var i = 0; i < key.length; i++) {
+        if (newAlphabet.indexOf(key[i]) === -1) {
+            newAlphabet += key[i];
+        }
+    }
+    for (var i = 0; i < 26; i++) {
+        var letter = String.fromCharCode(65 + i);
+        if (newAlphabet.indexOf(letter) === -1) {
+            newAlphabet += letter;
+        }
+    }
+
+    // 解密
+    for (var i = 0; i < ciphertext.length; i++) {
+        if (ciphertext[i] >= 'A' && ciphertext[i] <= 'Z') {
+            var index = newAlphabet.indexOf(ciphertext[i]);
+            plaintext += String.fromCharCode(index + 65);
+        } else {
+            plaintext += ciphertext[i];
+        }
+    }
+    document.getElementById('basic-addon2').innerHTML = '输出文本（解密）'
+    document.getElementById('ciphertext').innerText =  plaintext;
+}
+
+</script>
+</html>

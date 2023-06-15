@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>encrypt-decode:Caesar</title>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="./index.html">加密解密算法</a>
+	</div>
+	<div>
+		<ul class="nav navbar-nav">
+			<li><a href="./index.html">凯撒密码</a>
+            </li>
+            <li class="dropdown">
+				<a href="./letter_reverse.html" class="dropdown-toggle" style="font-weight:bold;"data-toggle="dropdown">
+					单字母替换加密算法
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li class="active"><a href="./letter_reverse.html">字母倒排序</a></li>
+                    <li class="divider"></li>
+					<li><a href="./monoalphabetic.html">单表置换密码</a>
+				</ul>
+            </li>
+			<li class="dropdown">
+				<a href="./multiletters.html" class="dropdown-toggle" data-toggle="dropdown">
+					多字母替换加密方法
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="./Vigenere.html">维吉利亚密码</a>
+				</ul>
+            </li>
+			</li>
+            <li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					转换加密方法
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="./transform_one.html">转换加密方法(1)</a></li>
+                    <li class="divider"></li>
+					<li><a href="./transform_two.html">转换加密方法(2)</a></li>
+                    <li class="divider"></li>
+					<li><a href="transform_three.html">转换加密方法(3)</a></li>
+                        
+				</ul>
+            </li>
+		</ul>
+        </div>
+	</div>
+	</div>
+</nav>
+<div id=""main-body" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<h1 class="page-header">字母倒排序加密/解密</h1>
+<!--Start!-->
+<div class="row margintb-6">
+    <div class="col-xs-12 col-sm-12">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">处理文本：</span>
+            <textarea name="plaintext" id="plaintext" class="form-control" rows="6" placeholder="这里输入明文"></textarea>
+        </div>
+    </div>
+</div>
+<div class="row margintb-6">
+    <div class="col-xs-12 col-sm-12" style="visibility: hidden;">
+        <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon3">密钥</span>
+            <input id="key" type="number" class="form-control" value="3" aria-describedby="basic-addon3">
+        </div>
+    </div>
+    <div class="row margintb-6">
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-primary width-100-percent" onclick="reverseAlphabet()" >加密/解密</button>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">输出文本：</span>
+            <textarea name="ciphertext" id="ciphertext" onclick="this.focus();this.select();" class="form-control" rows="6" placeholder="密文"></textarea>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+	/**
+	 * key是密钥;plaintext为待处理文本;ciphertext为输出文本
+	 */
+     function reverseAlphabet() {
+    var input = document.getElementById('plaintext').value;
+    var output = '';
+
+    for (var i = 0; i < input.length; i++) {
+        var ascii = input.charCodeAt(i);
+
+        if (ascii >= 65 && ascii <= 90) {
+            // 处理大写字母
+            output += String.fromCharCode(122 - (ascii - 65));
+        } else if (ascii >= 97 && ascii <= 122) {
+            // 处理小写字母
+            output += String.fromCharCode(90 - (ascii - 97));
+        } else {
+            // 其他字符保持不变
+            output += input.charAt(i);
+        }
+    }
+
+    document.getElementById('ciphertext').innerText = output;
+}
+
+
+</script>
+</html>
